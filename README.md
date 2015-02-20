@@ -99,7 +99,7 @@ The broadcast is wrapped in a `$timeout` with a configurable debounce setting, t
 To hook into this broadcast anywhere else in your project, and avoid having to set up your own event listeners, simply do this:
 
 ```javascript
-$rootScope.$on('matchscreen::resize', function () {
+$rootScope.$on('screenmatch::resize', function () {
     doMyOwnResizeTask()
 });
 ```
