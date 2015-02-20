@@ -77,7 +77,7 @@ The broadcast is wrapped in a `$timeout` with a configurable debounce setting, t
 To hook into this broadcast anywhere else in your project, and avoid having to set up your own event listeners, simply do this:
 
 ```javascript
-$rootScope.$on('matchscreen::resize', function () {  
+$rootScope.$on('matchscreen::resize', function () {
     doMyOwnResizeTask()
 });
 ```
@@ -86,42 +86,44 @@ The binding of the event listener can be prevented during configuration if you d
 
 ##API
 
-####`screenmatch.is(string)`
+#####`screenmatch.is(string)`
 Checks a list of values for matchmedia truthiness. Only triggers once, on load.
 
 For most use cases, you should probably use `bind()` or `once()` instead.
-#####argument
+######argument
 String containing a comma separated list of values to match.
-#####returns
+######returns
 True if any of the values is a match, else False.
 
-####`screenmatch.bind(string, callback)`
+#####`screenmatch.bind(string, callback)`
 Watches a list of values for matchmedia truthiness.   Executes a callback if the truthiness changes.
 
-#####arguments
+######arguments
 String containing a comma separated list of values to match. 
 
 Callback function to execute.
-#####returns
+######returns
 True if any of the values is a match, else False.
 
 Callback also returns True if a match, else False.
  
-####`screenmatch.once(string, callback)`
+#####`screenmatch.once(string, callback)`
 Watches a list of values for matchmedia truthiness. 
 Executes a callback when it finds a match, then stops watching. The callback will only execute once.
 
-#####arguments
+######arguments
 String containing a comma separated list of values to watch. 
  
 Callback function to execute.
-#####returns
-No return value. Callback will only execute on succesful match.
+######returns
+No return value. Callback will only execute on successful match.
 
 
 ####TODO
 
 finish docs
+
 package w/bower
+
 tests
 
