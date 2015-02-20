@@ -3,9 +3,31 @@ Angular API for matching screen changes with MatchMedia.  Supports custom rulese
 
 ##Installation
 
-todo
+#####Install
 
-include shiv for legacy support
+```html
+<script src='/path/to/your/modules/screenmatch.js'></script>
+```
+
+You will need to include the [MatchMedia polyfill](https://github.com/paulirish/matchMedia.js/) for <IE10 support
+
+todo - bower package
+
+#####Declare module as a dependency
+
+```javascript
+angular.module('yourmodule', ['angular.screenmatch']);
+```
+
+#####Inject screenmatch into a Controller
+
+```javascript
+angular.controller('MyController', function(screenmatch) {
+    screenmatch.once('sm', function () {
+        console.log('we logged a match to sm!');
+    };
+};
+```
 
 ###Configuration
 
