@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('screenmatch', [])
+        .module('angular.screenmatch', [])
         .provider('screenmatchConfig', screenmatchConfig)
         .factory('screenmatch', screenmatch)
         .directive('asmScreen', asmScreen);
