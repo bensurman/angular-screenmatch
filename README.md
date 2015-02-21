@@ -11,7 +11,6 @@ Angular API for matching screen changes with MatchMedia.  Supports custom rulese
 
 You will need to include the [MatchMedia polyfill](https://github.com/paulirish/matchMedia.js/) for <IE10 support
 
-todo - bower package
 
 #####Declare module as a dependency
 
@@ -22,22 +21,114 @@ angular.module('yourmodule', ['angular.screenmatch']);
 #####Inject screenmatch into a Controller
 
 ```javascript
-angular.controller('MyController', function(screenmatch) {
+angular.controller('YourController', function(screenmatch) {
     screenmatch.once('sm', function () {
         console.log('we logged a match to sm!');
     };
 };
 ```
 
-###Configuration
+##Configuration
 
-todo
+All of the configuration options are set in the angular module config block by injecting `screenmatchConfigProvider`.
+
+If they are not set, the defaults are used.
+
+####Configure Rules
+
+There are several ways to customise the rules used to match against.  
+
+#####Predefined rules.
+
+To use a predefined set of rules, assign a string to `screenmatchConfigProvider.config.rules`. 
+
+```javascript
+angular.module('yourmodule')
+    .config(function(screenmatchConfigProvider) {
+        screenmatchConfigProvider.config.rules = 'matchmedia';
+    });
+```
+
+There are currently two predefined sets, `bootstrap` for Bootstrap 3, or `matchmedia` for MatchMedia devices.
+
+```javascript
+bootstrap : {
+    lg: '(min-width: 1200px)',
+    md: '(min-width: 992px) and (max-width: 1199px)',
+    sm: '(min-width: 768px) and (max-width: 991px)',
+    xs: '(max-width: 767px)'
+};
+
+matchmedia : {
+    print : 'print',
+    screen : 'screen',
+    phone : '(max-width: 767px)',
+    tablet : '(min-width: 768px) and (max-width: 991px)',
+    desktop : '(min-width: 992px)',
+    portrait : '(orientation: portrait)',
+    landscape : '(orientation: landscape)'
+};
+```
+
+The default is Bootstrap 3.
+
+#####Custom rules
+
+To use a custom set of rules, assign an object instead.  The values must be strings, to match against CSS media queries.
+
+```javascript
+.config(function(screenmatchConfigProvider) {
+    screenmatchConfigProvider.config.rules = {
+        tiny : '(max-width: 320px)',
+        phablet : '(min-width: 321px) and (max-width: 991px)',
+        standard : '(min-width: 992px) and (max-width: 1280px)',
+        big: '(min-width: 1281px)'
+    };
+});
+```
+
+#####Add rules
+
+If you want to add rules to one of the predefined sets, use `screenmatchConfigProvider.config.extrarules`.
+Assign a valid object and the rules will be added to the predefined set.
+
+```javascript
+.config(function(screenmatchConfigProvider) {
+    screenmatchConfigProvider.config.extrarules = {
+        //adds to default bootstrap set
+        xl : '(min-width: 1600px)'
+    };
+});
+```
+
+####Configure the resize broadcast
+
+#####Debounce
+
+To adjust the delay between the window resizing and the broadcast, use  `screenmatchConfigProvider.config.debounce`.
+Assign an int for a delay(ms). The default is 250.
+
+```javascript
+.config(function(screenmatchConfigProvider) {
+    screenmatchConfigProvider.config.debounce = 500;
+});
+```
+
+#####Disable the event listener
+
+To disable the event listener and any related functionality, use `screenmatchConfigProvider.config.nobind`.
+
+```javascript
+.config(function(screenmatchConfigProvider) {
+    screenmatchConfigProvider.config.nobind = true;
+});
+```
 
 ##Usage
 
 ###In a Controller
 
-Assign a variable to `bind` and then update it on callback to always reflect the truthiness of the string passed in.  In the following example, using bootstrap rules, portable will always be True if the screen is xs or sm, else it will be False:
+Assign a variable to `bind` and then update it on callback to always reflect the truthiness of the string passed in.  In the following example, using the bootstrap ruleset, portable will always be True if the screen is xs or sm, else it will be False:
 
 ```javascript
 var portable = screenmatch.bind('xs, sm', function (match) {
@@ -104,14 +195,14 @@ $rootScope.$on('screenmatch::resize', function () {
 });
 ```
 
-The binding of the event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to use the `is` method.  Disabling the event listener will also stop the directive updating dynamically.
+The binding of the event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to use the `is` method.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
 
 ##API
 
 #####`screenmatch.is(string)`
 Checks a list of values for matchmedia truthiness. Only triggers once, on load.
 
-For most use cases, you should probably use `bind()` or `once()` instead.
+For resize events, you should use `bind()` or `once()` instead.
 ######argument
 String containing a comma separated list of values to match.
 ######returns
