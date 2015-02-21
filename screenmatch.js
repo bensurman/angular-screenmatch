@@ -173,14 +173,14 @@
             }
         }
 
-        //private functions
+        //Private functions
 
-        //Creates ruleset, default is matchmedia
+        //Creates ruleset, default is bootstrap
         function setRules() {
             if (angular.isObject(configRules) && !angular.equals({}, configRules)) {
                 rules = configRules;
             } else {
-                rules = ruleset[configRules] || ruleset.matchmedia;
+                rules = ruleset[configRules] || ruleset.bootstrap;
             }
 
             if (!angular.equals({}, extraRules)) {
@@ -196,22 +196,22 @@
             }
         }
 
-        //Exposes the window resize event via broadcast
+        //Expose the window resize event via broadcast
         function bindResize() {
             var w = angular.element($window);
-            var resized = false;
+            var done = false;
 
             w.on('resize', function () {
-                if (!resized) { //start timer
+                if (!done) { //start timer
                     var resizeTimer = $interval(function () {
                         $rootScope.$broadcast('screenmatch::resize', true);
-                        if (resized) { //stop timer
-                            $interval.cancel(resizeTimer);
-                            resized = false; //re-init timer
+                        if (done) { 
+                            $interval.cancel(resizeTimer); //stop timer
+                            done = false; //re-init timer
                         }
                     }, debounce);
                 }
-                resized = true; //so timer runs once
+                done = true; //so timer runs once
             });
         }
 
