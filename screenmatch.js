@@ -18,7 +18,7 @@
             // debounce: integer (ms)
             // ruleset: either a string eg 'bootstrap' or an obj for custom set
             // extrarules: obj that extends ruleset
-            // nobind: bool, set to false to cancel bind on init (defaults to true)
+            // nobind: bool, set to true to cancel bind on init
         };
 
         this.$get = function() {
