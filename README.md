@@ -105,7 +105,7 @@ Assign a valid object and the rules will be added to the predefined set.
 
 #####Debounce
 
-To adjust the delay between the window resizing and the broadcast, use  `screenmatchConfigProvider.config.debounce`.
+To adjust the delay between the window resizing and the broadcast, use screenmatchConfigProvider.config.debounce`.
 Assign an int for a delay(ms). The default is 250.
 
 ```javascript
@@ -128,7 +128,7 @@ To disable the event listener and any related functionality, use `screenmatchCon
 
 ###In a Controller
 
-Assign a variable to `bind` and then update it on callback to always reflect the truthiness of the string passed in.  In the following example, using the bootstrap ruleset, portable will always be True if the screen is xs or sm, else it will be False:
+Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `portable` will be True if the screen is xs or sm, else it will be False:
 
 ```javascript
 var portable = screenmatch.bind('xs, sm', function (match) {
