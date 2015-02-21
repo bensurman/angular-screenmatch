@@ -218,7 +218,7 @@ To disable binding a `$window` resize event listener, and any related functional
 #####`screenmatch.is(string)`
 >Checks a list of values for matchmedia truthiness. Only triggers once, on load.
 >
->For resize events, you should use `bind()` or `once()` instead.
+>For resize events, you should use `bind` or `once` instead.
 >######argument
 >String containing a comma separated list of values to match.
 >######returns
