@@ -13,10 +13,10 @@
         function screenmatchConfig() {
         /* jshint validthis:true */
         this.config = {
-            // Configure via the screenmatchConfigProvider
+            // Configured via screenmatchConfigProvider
             //
             // debounce: integer (ms)
-            // ruleset: either a string eg 'bootstrap' or an obj for custom set
+            // rules: either a string eg 'bootstrap' or an obj for custom set
             // extrarules: obj that extends ruleset
             // nobind: bool, set to true to cancel bind on init
         };
