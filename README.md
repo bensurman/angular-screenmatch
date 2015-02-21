@@ -94,12 +94,12 @@ To use a custom set of rules, assign an object instead.  The values must be stri
 #####Add rules
 
 If you want to add rules to one of the predefined sets, use `screenmatchConfigProvider.config.extrarules`.
-Assign a valid object and the rules will be added to the predefined set.
+Assign a valid object and the rules will be added to whichever set is in use.
 
 ```javascript
 .config(function(screenmatchConfigProvider) {
     screenmatchConfigProvider.config.extrarules = {
-        //adds to default bootstrap set
+        //added to default bootstrap set
         xl : '(min-width: 1600px)'
     };
 });
