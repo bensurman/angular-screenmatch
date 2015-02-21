@@ -36,9 +36,7 @@ angular.controller('YourController', function(screenmatch) {
 
 ##Configuration
 
-All of the configuration options are set in the angular module config block by injecting `screenmatchConfigProvider`.
-
-If they are not set, the defaults are used.
+All of the configuration options are set in the angular module config block by injecting `screenmatchConfigProvider`. If they are not set, the defaults are used.
 
 ####Configure Rules
 
