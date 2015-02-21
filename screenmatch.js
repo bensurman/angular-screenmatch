@@ -10,7 +10,7 @@
     screenmatch.$inject = ['$rootScope', '$window', '$interval', '$timeout', 'screenmatchConfig'];
     asmScreen.$inject = ['ngIfDirective', 'screenmatch'];
 
-    function screenmatchConfig() {
+        function screenmatchConfig() {
         /* jshint validthis:true */
         this.config = {
             // Configure via the screenmatchConfigProvider
@@ -18,7 +18,7 @@
             // debounce: integer (ms)
             // ruleset: either a string eg 'bootstrap' or an obj for custom set
             // extrarules: obj that extends ruleset
-            // nobind: bool, set to false to cancel bind on init (defaults to true)
+            // nobind: bool, set to true to cancel bind on init
         };
 
         this.$get = function() {
@@ -33,8 +33,7 @@
         var configRules = screenmatchConfig.config.rules;
         var extraRules = screenmatchConfig.config.extraRules || {};
         var nobind = screenmatchConfig.config.nobind || false;
-        var debounce = screenmatchConfig.config.debounce || 500;
-        var current = null;
+        var debounce = screenmatchConfig.config.debounce || 250;
         var ruleset = {
             bootstrap : {
                 lg: '(min-width: 1200px)',
@@ -100,17 +99,19 @@
         //
         //Args: [1] String (passed to is())
         //      [2] Func for callback
+        //      [3] Scope, the scope to attach the listener to
         //
         //Returns: True if any of the values is a match, else False.
         //         Callback on resize, also returns True/False
         //
-        function bind(list, callback) {
+        function bind(list, callback, scope) {
             var prev = null;
             var match = is(list); // set truthiness of match
 
             if (!nobind && angular.isFunction(callback)) {
 
-                $rootScope.$on('screenmatch::resize', function () {
+                scope = scope || $rootScope;
+                scope.$on('screenmatch::resize', function () {
 
                     prev = match;
                     match = is(list);
@@ -129,8 +130,8 @@
 
 
         //Usage(once): Executing a callback that only needs to run once on a successful match.
-        //            Eg, loading data.
-        //            After executing callback it will deregister.
+        //             Eg, loading data.
+        //             After executing callback it will deregister.
         //
         //Method: Fires a callback, ONCE, when a match is found.
         //
@@ -138,10 +139,11 @@
         //
         //Args: [1] String (passed to is())
         //      [2] Func for callback
+        //      [3] Scope, the scope to attach the listener to
         //
         //Returns: Fires the callback. No other return value.
         //
-        function once(list, callback) {
+        function once(list, callback, scope) {
             var fired = false;
             var prev = null;
             var match = is(list); // set truthiness of match
@@ -154,7 +156,9 @@
                 }
 
                 if (!nobind && !fired) {
-                    var watcher = $rootScope.$on('screenmatch::resize', function () {
+
+                    scope = scope || $rootScope;
+                    var watcher = scope.$on('screenmatch::resize', function () {
 
                         prev = match;
                         match = is(list);
@@ -174,14 +178,14 @@
             }
         }
 
-        //private functions
+        //Private functions
 
-        //Creates ruleset, default is matchmedia
+        //Creates ruleset, default is bootstrap
         function setRules() {
             if (angular.isObject(configRules) && !angular.equals({}, configRules)) {
                 rules = configRules;
             } else {
-                rules = ruleset[configRules] || ruleset.matchmedia;
+                rules = ruleset[configRules] || ruleset.bootstrap;
             }
 
             if (!angular.equals({}, extraRules)) {
@@ -197,22 +201,22 @@
             }
         }
 
-        //Exposes the window resize event via broadcast
+        //Expose the window resize event via broadcast
         function bindResize() {
             var w = angular.element($window);
-            var resized = false;
+            var done = false;
 
             w.on('resize', function () {
-                if (!resized) { //start timer
+                if (!done) { //start timer
                     var resizeTimer = $interval(function () {
                         $rootScope.$broadcast('screenmatch::resize', true);
-                        if (resized) { //stop timer
-                            $interval.cancel(resizeTimer);
-                            resized = false; //re-init timer
+                        if (done) {
+                            $interval.cancel(resizeTimer); //stop timer
+                            done = false; //re-init timer
                         }
                     }, debounce);
                 }
-                resized = true; //so timer runs once
+                done = true; //so timer runs once
             });
         }
 
@@ -225,13 +229,12 @@
     }
 
 //  Usage(asmScreen): The same as ngIf, but pass in a string to match.
-//                    Eg, <p ams-screen='phone'> I will appear on phones </p>
+//                    Eg, <p asm-screen='phone'> I will appear on phones </p>
     function asmScreen(ngIfDirective, screenmatch) {
 
         var ngIf = ngIfDirective[0];
-        //add usage notes
         var directive = {
-            link:link,
+            link: link,
             terminal: ngIf.terminal,
             transclude: ngIf.transclude,
             priority: ngIf.priority,
@@ -239,13 +242,15 @@
         };
 
         return directive;
-        /////////////////
+
+        // function compile
         function link(scope, element, attrs) {
+
             var size = attrs.asmScreen;
 
             var match = screenmatch.bind(size, function (val) {
                 match = val;
-            });
+            }, scope);
 
             attrs.ngIf = function() {
                 return match;
