@@ -198,7 +198,7 @@ $rootScope.$on('screenmatch::resize', function () {
 });
 ```
 
-The binding of the event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to use the `is` method.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
+The binding of the event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
 
 ##API
 
