@@ -214,19 +214,21 @@ To disable binding a `$window` resize event listener, and any related functional
 >######returns
 >True if any of the values is a match, else False.
 
-#####`screenmatch.bind(string, callback)`
+#####`screenmatch.bind(string, callback, scope)`
 >Watches a list of values for matchmedia truthiness.   Executes a callback if the truthiness changes.
 >
 >######arguments
 >String containing a comma separated list of values to match. 
 >
 >Callback function to execute.
+>
+>Scope to register the listener on. Defaults to $rootScope if omitted.
 >######returns
 >True if any of the values is a match, else False.
 >
 >Callback also returns True if a match, else False.
  
-#####`screenmatch.once(string, callback)`
+#####`screenmatch.once(string, callback, scope)`
 >Watches a list of values for matchmedia truthiness. 
 >Executes a callback when it finds a match, then stops watching. The callback will only execute once.
 >
@@ -234,6 +236,8 @@ To disable binding a `$window` resize event listener, and any related functional
 >String containing a comma separated list of values to watch. 
 > 
 >Callback function to execute.
+>
+>Scope to register the listener on. Defaults to $rootScope if omitted.
 >######returns
 >No return value. Callback will only execute on successful match.
 
