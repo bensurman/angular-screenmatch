@@ -151,7 +151,7 @@ var portable = screenmatch.bind('xs, sm', function (match) {
 };
 ```
 
-You can also use `bind` to conditionally execute other code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes).
+You can also use `bind` to conditionally execute code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes).
 
 ```javascript
 screenmatch.bind('lg', function(match) {
