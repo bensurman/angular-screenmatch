@@ -106,7 +106,7 @@ A single event listener is added to `$window` which broadcasts resize events usi
 
 This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to `bind` or `once` and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
 
-To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Use this sparingly! There is no way to manually deregister these listeners, although `once` will deregister itself if it finds a match.
+To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Use this sparingly! There is no easy way to deregister these listeners, although `once` will deregister itself if it finds a match.
 
 You can hook into the `$broadcast` event anywhere else in your project by registering your own listener. Again, the listener will deregister when the associated scope is destroyed, or you call `$rootScope.$on` and it will listen indefinitely.
 
