@@ -210,11 +210,7 @@
                 if (!done) { //start timer
                     var resizeTimer = $interval(function () {
                         $rootScope.$broadcast('screenmatch::resize', true);
-<<<<<<< HEAD
                         if (done) {
-=======
-                        if (done) { 
->>>>>>> 0c0a17d619599a788eed74a8f4ea219bb2d4284e
                             $interval.cancel(resizeTimer); //stop timer
                             done = false; //re-init timer
                         }
@@ -246,12 +242,7 @@
         };
 
         return directive;
-<<<<<<< HEAD
 
-        // function compile
-=======
-        
->>>>>>> 0c0a17d619599a788eed74a8f4ea219bb2d4284e
         function link(scope, element, attrs) {
 
             var size = attrs.asmScreen;
