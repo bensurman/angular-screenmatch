@@ -120,7 +120,7 @@ Assign an int for a delay in ms. The default is 250.
 
 #####Disable the event listener
 
-To disable the event listener and any related functionality, use `screenmatchConfigProvider.config.nobind`.
+To disable the resize event listener and any related functionality, use `screenmatchConfigProvider.config.nobind`.
 
 ```javascript
 .config(function(screenmatchConfigProvider) {
