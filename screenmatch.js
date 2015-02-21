@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('blocks.screenmatch')
+        .module('angular.screenmatch')
         .run(polyfillInjector)
         .provider('screenmatchConfig', screenmatchConfig)
         .factory('screenmatch', screenmatch)
