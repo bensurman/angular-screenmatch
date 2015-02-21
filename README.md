@@ -130,7 +130,7 @@ To disable the resize event listener and any related functionality, use `screenm
 
 ##Usage
 
-###Using the Directive
+####Using the Directive
 
 The directive is super easy to use.  Just pass in the string you want it to watch, and it will behave like `ngIf`.
 
@@ -140,7 +140,7 @@ The directive is super easy to use.  Just pass in the string you want it to watc
 </div>
 ```
 
-###In a Controller
+####In a Controller
 
 Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `portable` will be True if the screen is xs or sm, else it will be False:
 
@@ -184,7 +184,7 @@ if (smallScreen) {
 
 Just remember that `is` will not update if the screen is resized.  It may be more practical to use either `bind` or `once`.
 
-###How resize events are handled
+####How resize events are handled
 A single event listener is added to `$window` which broadcasts resize events over `$rootScope`.  This prevents having to bind an event listener every time a directive is used or an angular binding is made.
 
 The broadcast is wrapped in a `$timeout` with a configurable debounce setting, to delay firing it when the window resizes. 
