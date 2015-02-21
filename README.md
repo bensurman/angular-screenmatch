@@ -1,7 +1,8 @@
 # angular-screenmatch
 Angular API for calculating screen sizes with matchMedia.
-- dynamic matching on resize
-- static matching on load
+- match on load
+- match on change
+- match once, then execute function
 - create custom rules
 - use or extend matchMedia and Bootstrap 3 rules
 - exposes an (optional) window resize event broadcast
