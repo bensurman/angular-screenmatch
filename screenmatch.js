@@ -33,8 +33,7 @@
         var configRules = screenmatchConfig.config.rules;
         var extraRules = screenmatchConfig.config.extraRules || {};
         var nobind = screenmatchConfig.config.nobind || false;
-        var debounce = screenmatchConfig.config.debounce || 500;
-        var current = null;
+        var debounce = screenmatchConfig.config.debounce || 250;
         var ruleset = {
             bootstrap : {
                 lg: '(min-width: 1200px)',
@@ -129,8 +128,8 @@
 
 
         //Usage(once): Executing a callback that only needs to run once on a successful match.
-        //            Eg, loading data.
-        //            After executing callback it will deregister.
+        //             Eg, loading data.
+        //             After executing callback it will deregister.
         //
         //Method: Fires a callback, ONCE, when a match is found.
         //
@@ -225,11 +224,10 @@
     }
 
 //  Usage(asmScreen): The same as ngIf, but pass in a string to match.
-//                    Eg, <p ams-screen='phone'> I will appear on phones </p>
+//                    Eg, <p asm-screen='phone'> I will appear on phones </p>
     function asmScreen(ngIfDirective, screenmatch) {
 
         var ngIf = ngIfDirective[0];
-        //add usage notes
         var directive = {
             link:link,
             terminal: ngIf.terminal,
@@ -239,7 +237,7 @@
         };
 
         return directive;
-        /////////////////
+        
         function link(scope, element, attrs) {
             var size = attrs.asmScreen;
 
