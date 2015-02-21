@@ -188,7 +188,7 @@ Just remember that `is` will not update if the screen is resized.  It may be mor
 ####How resize events are handled
 A single event listener is added to `$window` which broadcasts resize events over `$rootScope`.  This prevents having to bind an event listener every time a directive is used or an angular binding is made.
 
-The broadcast is wrapped in a `$timeout` with a configurable debounce setting, to delay firing it when the window resizes. 
+The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes. 
 
 To hook into this broadcast anywhere else in your project, and avoid having to set up your own event listeners, simply do this:
 
