@@ -133,7 +133,7 @@ To disable the resize event listener and any related functionality, use `screenm
 
 ####Using the Directive
 
-The directive is super easy to use.  Just pass in the string you want it to watch, and it will behave like `ngIf`.
+The directive is super easy to use.  Just assign a string that you want it to watch, and it will behave like `ngIf`.
 
 ```html
 <div asm-screen="md, lg">
