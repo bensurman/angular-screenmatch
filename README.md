@@ -111,8 +111,8 @@ Assign a valid object and the rules will be added to the predefined set.
 
 #####Debounce
 
-To adjust the delay between the window resizing and the broadcast, use screenmatchConfigProvider.config.debounce`.
-Assign an int for a delay(ms). The default is 250.
+To set the delay between the window resizing and the broadcast, use `screenmatchConfigProvider.config.debounce`.
+Assign an int for a delay in ms. The default is 250.
 
 ```javascript
 .config(function(screenmatchConfigProvider) {
