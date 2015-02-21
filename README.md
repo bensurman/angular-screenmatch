@@ -34,6 +34,80 @@ angular.controller('YourController', function(screenmatch) {
     };
 };
 ```
+##Usage
+
+####Using the Directive
+
+The directive is super easy to use.  Just assign a string that you want it to watch, and it will behave like `ngIf`.
+
+```html
+<div asm-screen="md, lg">
+    <p>I will only appear on medium and large screens!</p>
+</div>
+```
+
+####In a Controller
+
+Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `scope.portable` will be True if the screen is xs or sm, else it will be False.
+
+```javascript
+scope.portable = screenmatch.bind('xs, sm', function (match) {
+    scope.portable = match;
+}, scope);
+```
+
+You can also use `bind` to conditionally execute code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes).
+
+```javascript
+screenmatch.bind('lg', function(match) {
+    if (match) {
+        startAnimation()
+    } else {
+        stopAnimation()
+    }
+}, scope);
+
+```
+The third argument `scope` is the scope you want to attach a listener too.  When that scope is destroyed, the listener will deregister.  You can omit the third argument and it will listen on `$rootScope` indefinitely instead. Check out the section on how resize events are handled for details.
+
+If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
+
+```javascript
+screenmatch.once('lg', function () {
+    myImgService.get(data);
+});
+```
+`once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  The listener is always unregistered once the callback has executed, even if you skip the scope argument.
+
+
+If you don't care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
+
+```javascript
+var smallScreen = screenmatch.is('sm, xs');
+if (smallScreen) {
+    smallSpinnerLoad()
+}
+```
+
+Just remember that `is` will not update if the screen is resized.  It may be more practical to use either `bind` or `once`.
+
+####How resize events are handled
+A single event listener is added to `$window` which broadcasts resize events using `$rootScope.$broadcast`.  The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes. 
+
+This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to `bind` or `once` and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
+
+To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Use this sparingly! There is no way to manually deregister these listeners, although `once` will deregister itself if it finds a match.
+
+You can hook into the `$broadcast` event anywhere else in your project by registering your own listener. Again, the listener will deregister when the associated scope is destroyed, or you call `$rootScope.$on` and it will listen indefinitely.
+
+```javascript
+scope.$on('screenmatch::resize', function () {
+    doMyOwnResizeTask()
+});
+```
+
+The binding of the `$window` event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
+
 
 ##Configuration
 
@@ -121,90 +195,13 @@ Assign an int for a delay in ms. The default is 250.
 
 #####Disable the event listener
 
-To disable the `$window` resize event listener and any related functionality, use `screenmatchConfigProvider.config.nobind`.
+To disable binding a `$window` resize event listener, and any related functionality, use `screenmatchConfigProvider.config.nobind`.
 
 ```javascript
 .config(function(screenmatchConfigProvider) {
     screenmatchConfigProvider.config.nobind = true;
 });
 ```
-
-##Usage
-
-####Using the Directive
-
-The directive is super easy to use.  Just assign a string that you want it to watch, and it will behave like `ngIf`.
-
-```html
-<div asm-screen="md, lg">
-    <p>I will only appear on medium and large screens!</p>
-</div>
-```
-
-####In a Controller
-
-Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `scope.portable` will be True if the screen is xs or sm, else it will be False.
-
-```javascript
-scope.portable = screenmatch.bind('xs, sm', function (match) {
-    scope.portable = match;
-}, scope);
-```
-
-You can also use `bind` to conditionally execute code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes).
-
-```javascript
-screenmatch.bind('lg', function(match) {
-    if (match) {
-        startAnimation()
-    } else {
-        stopAnimation()
-    }
-}, scope);
-
-```
-The third argument `scope` is the scope you want to attach a listener too.  When that scope is destroyed, the listener will deregister.  You can omit the third argument and it will listen on `$rootScope` indefinitely instead. Check out the section on how resize events are handled for details.
-
-If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
-
-```javascript
-screenmatch.once('lg', function () {
-    myImgService.get(data);
-});
-```
-`once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  The listener is always unregistered once the callback has executed, even if you skip the scope argument.
-
-
-If you don't care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
-
-```javascript
-var smallScreen = screenmatch.is('sm, xs');
-if (smallScreen) {
-    smallSpinnerLoad()
-}
-```
-
-Just remember that `is` will not update if the screen is resized.  It may be more practical to use either `bind` or `once`.
-
-####How resize events are handled
-A single event listener is added to `$window` which broadcasts resize events using `$rootScope.$broadcast`.  The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes. 
-
-This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to `bind` or `once` and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
-
-To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Use this sparingly..  there is no way to unregister these listeners.
-
-You can hook into the `$broadcast` anywhere else in your project by registering your own listener. Again, the listener will deregister when the associated scope is destroyed, or you call `$rootScope.$on` and it will listen indefinitely.
-
-```javascript
-scope.$on('screenmatch::resize', function () {
-    doMyOwnResizeTask()
-});
-```
-
-
-
-
-The binding of the `$window` event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
 
 ##API
 
