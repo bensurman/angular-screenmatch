@@ -10,7 +10,7 @@
     screenmatch.$inject = ['$rootScope', '$window', '$interval', '$timeout', 'screenmatchConfig'];
     asmScreen.$inject = ['ngIfDirective', 'screenmatch'];
 
-        function screenmatchConfig() {
+    function screenmatchConfig() {
         /* jshint validthis:true */
         this.config = {
             // Configured via screenmatchConfigProvider
@@ -62,7 +62,10 @@
         init();
 
         return service;
+
         /////////////////
+
+        //Public methods
 
         //Usage(is): Initializing variables which only need to be set once.
         //           Also used internally by other methods.
@@ -133,7 +136,8 @@
         //             Eg, loading data.
         //             After executing callback it will deregister.
         //
-        //Method: Fires a callback, ONCE, when a match is found.
+        //Method: Passes a list of values to is() to compare truthiness.
+        //        Fires a callback, ONCE, when a match is found.
         //
         //        Note: if nobind is true, callback only performs a check on page load.
         //
@@ -178,9 +182,10 @@
             }
         }
 
-        //Private functions
+        //Private methods
 
-        //Creates ruleset, default is bootstrap
+        //Selects rules, default is bootstrap
+        //Extends rules if extra rules
         function setRules() {
             if (angular.isObject(configRules) && !angular.equals({}, configRules)) {
                 rules = configRules;
@@ -188,7 +193,7 @@
                 rules = ruleset[configRules] || ruleset.bootstrap;
             }
 
-            if (!angular.equals({}, extraRules)) {
+            if (!angular.equals({}, extraRules) && angular.isObject(extraRules)) {
 
                 var cleanRules = {};
                 angular.forEach(extraRules, function (rule, name) {
@@ -201,7 +206,7 @@
             }
         }
 
-        //Expose the window resize event via broadcast
+        //Exposes the window resize event via broadcast
         function bindResize() {
             var w = angular.element($window);
             var done = false;
