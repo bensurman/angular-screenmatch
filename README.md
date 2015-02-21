@@ -203,36 +203,36 @@ The binding of the event listener can be prevented during configuration if you d
 ##API
 
 #####`screenmatch.is(string)`
-Checks a list of values for matchmedia truthiness. Only triggers once, on load.
-
-For resize events, you should use `bind()` or `once()` instead.
-######argument
-String containing a comma separated list of values to match.
-######returns
-True if any of the values is a match, else False.
+>Checks a list of values for matchmedia truthiness. Only triggers once, on load.
+>
+>For resize events, you should use `bind()` or `once()` instead.
+>######argument
+>String containing a comma separated list of values to match.
+>######returns
+>True if any of the values is a match, else False.
 
 #####`screenmatch.bind(string, callback)`
-Watches a list of values for matchmedia truthiness.   Executes a callback if the truthiness changes.
-
-######arguments
-String containing a comma separated list of values to match. 
-
-Callback function to execute.
-######returns
-True if any of the values is a match, else False.
-
-Callback also returns True if a match, else False.
+>Watches a list of values for matchmedia truthiness.   Executes a callback if the truthiness changes.
+>
+>######arguments
+>String containing a comma separated list of values to match. 
+>
+>Callback function to execute.
+>######returns
+>True if any of the values is a match, else False.
+>
+>Callback also returns True if a match, else False.
  
 #####`screenmatch.once(string, callback)`
-Watches a list of values for matchmedia truthiness. 
-Executes a callback when it finds a match, then stops watching. The callback will only execute once.
-
-######arguments
-String containing a comma separated list of values to watch. 
- 
-Callback function to execute.
-######returns
-No return value. Callback will only execute on successful match.
+>Watches a list of values for matchmedia truthiness. 
+>Executes a callback when it finds a match, then stops watching. The callback will only execute once.
+>
+>######arguments
+>String containing a comma separated list of values to watch. 
+> 
+>Callback function to execute.
+>######returns
+>No return value. Callback will only execute on successful match.
 
 
 ####TODO
