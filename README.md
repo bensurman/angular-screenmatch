@@ -174,7 +174,7 @@ screenmatch.once('lg', function () {
 
 `once` will attempt to find a match on load and if it fails, register a listener which will check conditions each time the screen resizes.  The listener is unregistered once the callback has executed. 
 
-If you dont care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
+If you don't care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
 
 ```javascript
 var smallScreen = screenmatch.is('sm, xs');
