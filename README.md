@@ -132,6 +132,16 @@ To disable the event listener and any related functionality, use `screenmatchCon
 
 ##Usage
 
+###Using the Directive
+
+The directive is super easy to use.  Just pass in the string you want it to watch, and it will behave like `ngIf`.
+
+```html
+<div asm-screen="md, lg">
+    <p>I will only appear on medium and large screens!</p>
+</div>
+```
+
 ###In a Controller
 
 Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `portable` will be True if the screen is xs or sm, else it will be False:
@@ -174,19 +184,7 @@ if (smallScreen) {
 }
 ```
 
-Just remember that `is` will not update if the screen changes size... its often more practical to use either `bind` or `once`.
-
-###Using the Directive
-
-The directive is super easy to use.  Just pass in the string you want it to watch, and it will behave like `ngIf`:
-
-```html
-<div asm-screen="md, lg">
-    <p>I will only appear on medium and large screens!</p>
-<div>
-```
-
-You can also hook into the standard `ngIf` animation classes.. behind the scenes it works the same way. 
+Just remember that `is` will not update if the screen is resized.  It may be more practical to use either `bind` or `once`.
 
 ###How resize events are handled
 A single event listener is added to `$window` which broadcasts resize events over `$rootScope`.  This prevents having to bind an event listener every time a directive is used or an angular binding is made.
