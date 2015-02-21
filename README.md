@@ -68,7 +68,7 @@ screenmatch.bind('lg', function(match) {
 }, scope);
 
 ```
-The third argument `scope` is the scope you want to attach a listener too.  When that scope is destroyed, the listener will deregister.  You can omit the third argument and it will listen on `$rootScope` indefinitely instead. Check out the section on how resize events are handled for details.
+The third argument `scope` is the scope you want to attach a listener too.  When that scope is destroyed, the listener will deregister.  You can omit the third argument and it will listen on `$rootScope` indefinitely instead. Check out the [section on how resize events are handled for details](####How-resize-events-are-handled).
 
 If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
