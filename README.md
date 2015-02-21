@@ -142,7 +142,7 @@ The directive is super easy to use.  Just pass in the string you want it to watc
 
 ####In a Controller
 
-Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `portable` will be True if the screen is xs or sm, else it will be False:
+Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `portable` will be True if the screen is xs or sm, else it will be False.
 
 ```javascript
 var portable = screenmatch.bind('xs, sm', function (match) {
@@ -150,7 +150,7 @@ var portable = screenmatch.bind('xs, sm', function (match) {
 };
 ```
 
-You can also use `bind` to conditionally execute other code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes):
+You can also use `bind` to conditionally execute other code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes).
 
 ```javascript
 screenmatch.bind('lg', function(match) {
@@ -163,7 +163,7 @@ screenmatch.bind('lg', function(match) {
 
 ```
 
-If you only want to execute some code once, when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend. For example:
+If you only want to execute some code once, when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
 ```javascript
 screenmatch.once('lg', function () {
@@ -173,7 +173,7 @@ screenmatch.once('lg', function () {
 
 `once` will attempt to find a match initially and if it fails, register a listener which will check conditions each time the screen resizes.  The listener is unregistered once the callback has executed. 
 
-If you dont care about resize events and just want to check the screen size on load, you can use `is` for a one time binding. For example:
+If you dont care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
 
 ```javascript
 var smallScreen = screenmatch.is('sm, xs');
