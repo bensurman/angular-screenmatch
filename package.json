@@ -1,0 +1,33 @@
+{
+  "name": "angular-screenmatch",
+  "version": "1.0.0",
+  "description": "screen matching service for angular",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bensurman/angular-screenmatch.git"
+  },
+  "keywords": [
+    "screenmatch",
+    "angular",
+    "matchmedia",
+    "directive"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bensurman/angular-screenmatch/issues"
+  },
+  "homepage": "https://github.com/bensurman/angular-screenmatch",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-jshint": "^1.9.2",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-ng-annotate": "^0.5.2",
+    "gulp-uglify": "^1.1.0"
+  }
+}

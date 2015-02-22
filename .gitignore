@@ -1,0 +1,6 @@
+# sublime files
+*.sublime-workspace
+*.sublime-project
+
+# local node stuff
+/node_modules
