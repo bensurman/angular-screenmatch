@@ -99,12 +99,12 @@
         //        Note : if nobind is true, there is no update on resize.
         //
         //Args: [1] String (passed to is())
-        //      [3] Scope, the scope to attach the listener to
+        //      [2] Scope, the scope to attach the listener to
         //
         //Returns: An object with the following properties:
         //         active : always reflects the truthiness of the match
         //         unbind() : deregister the watcher
-        function bind(list, callback, scope) {
+        function bind(list, scope) {
             var prev = null;
             var match = is(list); // set truthiness of match
 
