@@ -1,4 +1,5 @@
 # angular-screenmatch
+
 Angular API for calculating screen sizes with matchMedia.
 - ngIf style directive
 - match on load
@@ -26,7 +27,7 @@ Angular API for calculating screen sizes with matchMedia.
 <script src='/path/to/your/modules/screenmatch.js'></script>
 ```
 
-You will need to include the [matchMedia polyfill](https://github.com/paulirish/matchMedia.js/) for <IE10 support
+The [matchMedia polyfill](https://github.com/paulirish/matchMedia.js/) is included and will be injected automatically into legacy browsers (<IE10)
 
 
 #####Declare module as a dependency
