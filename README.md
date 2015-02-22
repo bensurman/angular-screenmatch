@@ -9,7 +9,7 @@ Angular API for calculating screen sizes with matchMedia.
 - use or extend matchMedia and Bootstrap 3 rules
 - window resize event broadcast, with debounce (optional)
 
-##Contents
+## Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,12 +19,10 @@ Angular API for calculating screen sizes with matchMedia.
 - [Configuration](#configuration)
 - [API](#api)
 
-##Installation
-
-#####Install
+## Installation
 
  Get the minified script from /dist.
- 
+
 ```html
 <script src='/path/to/your/modules/angular-screenmatch.min.js'></script>
 ```
@@ -32,13 +30,13 @@ Angular API for calculating screen sizes with matchMedia.
 The [matchMedia polyfill](https://github.com/paulirish/matchMedia.js/) is included and will be injected automatically into legacy browsers (<IE10)
 
 
-#####Declare module as a dependency
+##### Declare module as a dependency
 
 ```javascript
 angular.module('yourmodule', ['angular.screenmatch']);
 ```
 
-#####Inject screenmatch into a Controller
+##### Inject screenmatch into a Controller
 
 ```javascript
 angular.controller('YourController', function(screenmatch) {
@@ -47,9 +45,9 @@ angular.controller('YourController', function(screenmatch) {
     };
 };
 ```
-##Usage
+## Usage
 
-####Using the Directive
+#### Using the Directive
 
 The directive is super easy to use.  Just assign a string that you want it to watch, and it will behave like `ngIf`.
 
@@ -59,29 +57,30 @@ The directive is super easy to use.  Just assign a string that you want it to wa
 </div>
 ```
 
-####In a Controller
+#### In a Controller
 
-Assign a variable to `bind` and then update it on callback, to always reflect the truthiness of the string passed in.  In the following example, `scope.portable` will be True if the screen is xs or sm, else it will be False.
-
-```javascript
-scope.portable = screenmatch.bind('xs, sm', function (match) {
-    scope.portable = match;
-}, scope);
-```
-
-You can also use `bind` to conditionally execute code when the screen size changes.  The callback will execute every time the condition changes (not every time the screen resizes).
+Assign a variable to `bind` to get an object that has two properties. The first is `active`, which always reflects the truthiness of the string passed in.
 
 ```javascript
-screenmatch.bind('lg', function(match) {
-    if (match) {
-        startAnimation()
-    } else {
-        stopAnimation()
-    }
-}, scope);
+$scope.portable = screenmatch.bind('xs, sm', $scope);
 
+$scope.portable.active = true //the screen is xs or sm
+
+if ($scope.portable.active) {
+    stopAnimation()
+} else {
+    startAnimation()
+}
 ```
-The third argument `scope` is the scope you want to attach a listener too.  When that scope is destroyed, the listener will deregister.  You can omit the third argument and it will listen on `$rootScope` indefinitely instead. Check out the [section on how resize events are handled for details](#how-resize-events-are-handled).
+The `$scope` argument is the scope you want to bind a resize listener too.  When that scope is destroyed, the listener will deregister.  You can omit this argument and it will listen on `$rootScope` indefinitely instead, or until you cancel it.
+
+To cancel the listener manually, use the second property of the object `unbind`.
+
+```javascript
+$scope.portable.unbind(); //now I no longer react to changes!
+```
+
+Check out the [section on how resize events are handled for details](#how-resize-events-are-handled) for more information on listeners.
 
 If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
@@ -90,7 +89,7 @@ screenmatch.once('lg', function () {
     myImgService.get(data);
 });
 ```
-`once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  The listener is always unregistered once the callback has executed, even if you skip the scope argument.
+`once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  The listener is always unregistered once the callback has executed.
 
 
 If you don't care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
@@ -104,14 +103,14 @@ if (smallScreen) {
 
 Just remember that `is` will not update if the screen is resized.  It may be more practical to use either `bind` or `once`.
 
-####How resize events are handled
-A single event listener is added to `$window` which broadcasts resize events using `$rootScope.$broadcast`.  The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes. 
+## How resize events are handled
+A single event listener is added to `$window` which broadcasts resize events using `$rootScope.$broadcast`.  The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes.
 
 This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to `bind` or `once` and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
 
-To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Use this sparingly! There is no easy way to deregister these listeners, although `once` will deregister itself if it finds a match.
+To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Be careful to unregister any listeners you don't need if you use this feature.
 
-You can hook into the `$broadcast` event anywhere else in your project by registering your own listener. Again, the listener will deregister when the associated scope is destroyed, or you call `$rootScope.$on` and it will listen indefinitely.
+You can hook into the `$broadcast` event anywhere else in your project by registering your own listener.  See the [docs](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$on) for more info.
 
 ```javascript
 scope.$on('screenmatch::resize', function () {
@@ -119,20 +118,20 @@ scope.$on('screenmatch::resize', function () {
 });
 ```
 
-The binding of the `$window` event listener can be prevented during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
+The `$window` event listener can be disabled during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
 
 
-##Configuration
+## Configuration
 
 All of the configuration options are set in the angular module config block by injecting `screenmatchConfigProvider`. If they are not set, the defaults are used.
 
-####Configure Rules
+#### Configure Rules
 
-There are several ways to customise the rules used to match against.  
+There are several ways to customise the rules used to match against.
 
-#####Predefined rules.
+##### Predefined rules.
 
-To use a predefined set of rules, assign a string to `screenmatchConfigProvider.config.rules`. 
+To use a predefined set of rules, assign a string to `screenmatchConfigProvider.config.rules`.
 
 ```javascript
 angular.module('yourmodule')
@@ -164,7 +163,7 @@ matchmedia : {
 
 The default is Bootstrap 3.
 
-#####Custom rules
+##### Custom rules
 
 To use a custom set of rules, assign an object instead.  The values must be strings, to match against CSS media queries.
 
@@ -179,7 +178,7 @@ To use a custom set of rules, assign an object instead.  The values must be stri
 });
 ```
 
-#####Add rules
+##### Add rules
 
 If you want to add rules to one of the predefined sets, use `screenmatchConfigProvider.config.extrarules`.
 Assign a valid object and the rules will be added to whichever set is in use.
@@ -193,9 +192,9 @@ Assign a valid object and the rules will be added to whichever set is in use.
 });
 ```
 
-####Configure the resize broadcast
+#### Configure the resize broadcast
 
-#####Debounce
+##### Debounce
 
 To set the delay between the window resizing and the broadcast, use `screenmatchConfigProvider.config.debounce`.
 Assign an int for a delay in ms. The default is 250.
@@ -206,7 +205,7 @@ Assign an int for a delay in ms. The default is 250.
 });
 ```
 
-#####Disable the event listener
+##### Disable the event listener
 
 To disable binding a `$window` resize event listener, and any related functionality, use `screenmatchConfigProvider.config.nobind`.
 
@@ -216,52 +215,52 @@ To disable binding a `$window` resize event listener, and any related functional
 });
 ```
 
-##API
+## API
 
-#####`screenmatch.is(string)`
+##### `screenmatch.is(string)`
 >Checks a list of values for matchmedia truthiness. Only triggers once, on load.
 >
 >For resize events, you should use `bind` or `once` instead.
->######argument
+>###### argument
 >String containing a comma separated list of values to match.
->######returns
+>###### returns
 >True if any of the values is a match, else False.
 
-#####`screenmatch.bind(string, callback, scope)`
->Watches a list of values for matchmedia truthiness.   Executes a callback if the truthiness changes.
+##### `screenmatch.bind(string, scope)`
+>Watches a list of values for matchmedia truthiness.   Returns an object with methods to observe and cancel the watch.
 >
->######arguments
->String containing a comma separated list of values to match. 
->
->Callback function to execute.
+>###### arguments
+>String containing a comma separated list of values to match.
 >
 >Scope to register the listener on. Defaults to $rootScope if omitted.
->######returns
->True if any of the values is a match, else False.
+>###### returns
+>Object with two properties
 >
->Callback also returns True if a match, else False.
- 
-#####`screenmatch.once(string, callback, scope)`
->Watches a list of values for matchmedia truthiness. 
+>Object.active is True if any of the values is a match, else False.
+>
+>Object.unbind() to stop listening to resize events.
+
+##### `screenmatch.once(string, callback, scope)`
+>Watches a list of values for matchmedia truthiness.
 >Executes a callback when it finds a match, then stops watching. The callback will only execute once.
 >
->######arguments
->String containing a comma separated list of values to watch. 
-> 
+>###### arguments
+>String containing a comma separated list of values to watch.
+>
 >Callback function to execute.
 >
 >Scope to register the listener on. Defaults to $rootScope if omitted.
->######returns
+>###### returns
 >No return value. Callback will only execute on successful match.
 
 
-####TODO
+#### TODO
 
 
 credits
 
 
-package w/bower
+bower package
 
 
 unit tests
