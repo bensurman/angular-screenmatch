@@ -80,7 +80,7 @@ To cancel the listener manually, use the second property of the object `unbind`.
 $scope.portable.unbind(); //now I no longer react to changes!
 ```
 
-Check out the [section on how resize events are handled for details](#how-resize-events-are-handled) for more information on listeners.
+Check out the [section on how resize events are handled](#how-resize-events-are-handled) for more information on listeners.
 
 If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
