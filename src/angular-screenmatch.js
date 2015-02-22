@@ -158,7 +158,9 @@
 
                 if (match) {
                     fired = true;
-                    callback();
+                    $timeout(function() {
+                        callback();
+                    });
                 }
 
                 if (!nobind && !fired) {
@@ -170,8 +172,8 @@
                         match = is(list);
 
                         if (match && (prev !== match)) {
-                             $timeout(function() {
-                                fired = true;
+                            fired = true;
+                            $timeout(function() {
                                 callback();
                             });
                         }
