@@ -59,12 +59,14 @@ The directive is super easy to use.  Just assign a string that you want it to wa
 
 #### In a Controller
 
+##### `bind`
+
 Assign a variable to `bind` to get an object that has two properties. The first is `active`, which always reflects the truthiness of the string passed in.
 
 ```javascript
 $scope.portable = screenmatch.bind('xs, sm', $scope);
 
-$scope.portable.active === true; //the screen is xs or sm
+$scope.portable.active === true; //true if the screen is xs or sm
 
 if ($scope.portable.active) {
     stopAnimation();
@@ -72,15 +74,17 @@ if ($scope.portable.active) {
     startAnimation();
 }
 ```
-The `$scope` argument is the scope you want to bind a resize listener too.  When that scope is destroyed, the listener will deregister.  You can omit this argument and it will listen on `$rootScope` indefinitely instead, or until you cancel it.
-
-To cancel the listener manually, use the second property of the object `unbind`.
+The second property is `unbind` which you can call to stop the variable updating.
 
 ```javascript
 $scope.portable.unbind(); //now I no longer react to changes!
 ```
 
+The `$scope` argument that's initially passed in to bind is the scope you want to bind a resize listener too.  When that scope is destroyed, the listener will deregister.  You can omit this argument and it will listen on `$rootScope` indefinitely instead, or until you cancel it using `unbind`.
+
 Check out the [section on how resize events are handled](#how-resize-events-are-handled) for more information on listeners.
+
+##### `once`
 
 If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
@@ -89,8 +93,9 @@ screenmatch.once('lg', function () {
     myImgService.get(data);
 });
 ```
-`once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  The listener is always unregistered once the callback has executed.
+`once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  Whenever a match is found, the callback is executed, and the listener is deregistered.
 
+#####`is`
 
 If you don't care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
 
