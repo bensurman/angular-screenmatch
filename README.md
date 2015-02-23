@@ -64,7 +64,7 @@ Assign a variable to `bind` to get an object that has two properties. The first 
 ```javascript
 $scope.portable = screenmatch.bind('xs, sm', $scope);
 
-$scope.portable.active = true //the screen is xs or sm
+$scope.portable.active === true //the screen is xs or sm
 
 if ($scope.portable.active) {
     stopAnimation()
