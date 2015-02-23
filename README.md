@@ -64,12 +64,12 @@ Assign a variable to `bind` to get an object that has two properties. The first 
 ```javascript
 $scope.portable = screenmatch.bind('xs, sm', $scope);
 
-$scope.portable.active === true //the screen is xs or sm
+$scope.portable.active === true; //the screen is xs or sm
 
 if ($scope.portable.active) {
-    stopAnimation()
+    stopAnimation();
 } else {
-    startAnimation()
+    startAnimation();
 }
 ```
 The `$scope` argument is the scope you want to bind a resize listener too.  When that scope is destroyed, the listener will deregister.  You can omit this argument and it will listen on `$rootScope` indefinitely instead, or until you cancel it.
