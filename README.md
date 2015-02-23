@@ -59,7 +59,7 @@ The directive is super easy to use.  Just assign a string that you want it to wa
 
 #### In a Controller
 
-##### `bind`
+#### `bind`
 
 Assign a variable to `bind` to get an object that has two properties. The first is `active`, which always reflects the truthiness of the string passed in.
 
@@ -84,7 +84,7 @@ The `$scope` argument that's initially passed in to bind is the scope you want t
 
 Check out the [section on how resize events are handled](#how-resize-events-are-handled) for more information on listeners.
 
-##### `once`
+#### `once`
 
 If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
@@ -95,7 +95,7 @@ screenmatch.once('lg', function () {
 ```
 `once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  Whenever a match is found, the callback is executed, and the listener is deregistered.
 
-#####`is`
+#### `is`
 
 If you don't care about resize events and just want to check the screen size on load, you can use `is` for a one time binding.
 
