@@ -251,7 +251,7 @@ To disable binding a `$window` resize event listener, and any related functional
 >###### returns
 >True if any of the values is a match, else False.
 
-##### `screenmatch.bind(string, scope)`
+##### `screenmatch.bind(string[, scope])`
 >Watches a list of values for matchmedia truthiness.   Returns an object with methods to observe and cancel the watch.
 >
 >###### arguments
@@ -259,13 +259,13 @@ To disable binding a `$window` resize event listener, and any related functional
 >
 >Scope to register the listener on. Defaults to $rootScope if omitted.
 >###### returns
->Object with two properties
+>Object with two properties:
 >
 >Object.active is True if any of the values is a match, else False.
 >
 >Object.unbind() to stop listening to resize events.
 
-##### `screenmatch.once(string, callback, scope)`
+##### `screenmatch.once(string, callback[, scope])`
 >Watches a list of values for matchmedia truthiness.
 >Executes a callback when it finds a match, then stops watching. The callback will only execute once.
 >
@@ -278,6 +278,23 @@ To disable binding a `$window` resize event listener, and any related functional
 >###### returns
 >No return value. Callback will only execute on successful match.
 
+##### `screenmatch.when(string, true_callback[, false_callback, scope])`
+>Watches a list of values for matchmedia truthiness.  Executes a callback when it finds a match.
+>Optionally executes a second callback when it unmatches. Returns an object with method to cancel the watch.
+>
+>###### arguments
+>String containing a comma separated list of values to match.
+>
+>True Callback to execute on succesful match.
+>
+>False Callback to execute on unmatch (optional)
+>
+>Scope to register the listener on. Defaults to $rootScope if omitted.
+>###### returns
+>Object with one property:
+>
+>Object.cancel() to stop listening to resize events and stop executing callbacks
+>
 
 #### TODO
 
