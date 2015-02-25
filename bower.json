@@ -1,0 +1,29 @@
+{
+  "name": "angular-screenmatch",
+  "version": "1.0.1",
+  "homepage": "https://github.com/bensurman/angular-screenmatch",
+  "authors": [
+    "Ben Surman"
+  ],
+  "description": "Simple Angular API for performing screen size related tasks",
+  "main": "dist/angular-screenmatch.min.js",
+  "keywords": [
+    "angular",
+    "screen",
+    "matchmedia",
+    "match",
+    "screenmatch",
+    "angularjs",
+    "resize"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "*sublime-project",
+    "*sublime-workspace"
+  ]
+}
