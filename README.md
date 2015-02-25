@@ -104,17 +104,17 @@ screenmatch.when('lg', function () {
     runMyAnimations();
 }, function () {
     stopMyAnimations()
-}, $scope);
+});
 ```
 On load, a match (or unmatch) will be made, and the appropriate callback will execute. It won't run again unless the truthiness of the match changes - so no need to worry about multiple callbacks firing on every screen resize.
 
 If you need to deregister `when` manually, you can assign it to a variable and then call `cancel()`.
 ```javascript
-var watcher = screenmatch.when('lg', function () {
+var stuff = screenmatch.when('lg', function () {
     doStuff(); //will do stuff every time large gets matched
 });
 
-watcher.cancel() // does nothing now
+stuff.cancel() // does nothing now
 ```
 
 ##### `is`
@@ -233,7 +233,7 @@ Assign an int for a delay in ms. The default is 250.
 
 ##### Disable the event listener
 
-To disable binding a `$window` resize event listener, and any related functionality, use `screenmatchConfigProvider.config.nobind`.
+To disable binding the `$window` resize event listener, and any related functionality, use `screenmatchConfigProvider.config.nobind`.
 
 ```javascript
 .config(function(screenmatchConfigProvider) {
@@ -246,7 +246,6 @@ To disable binding a `$window` resize event listener, and any related functional
 ##### `screenmatch.is(string)`
 >Checks a list of values for matchmedia truthiness. Only triggers once, on load.
 >
->For resize events, you should use `bind` or `once` instead.
 >###### argument
 >String containing a comma separated list of values to match.
 >###### returns
