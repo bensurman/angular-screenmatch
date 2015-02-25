@@ -21,7 +21,9 @@ Simple Angular API for performing screen size related tasks.
 
 ## Installation
 
- Get the minified script from /dist.
+`bower install angular-screenmatch`
+
+ Or get the minified script from /dist.
 
 ```html
 <script src='/path/to/your/modules/angular-screenmatch.min.js'></script>
