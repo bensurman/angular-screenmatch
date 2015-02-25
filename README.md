@@ -104,13 +104,13 @@ screenmatch.when('lg', function () {
     stopMyAnimations()
 }, $scope);
 ```
-To deregister `when` manually, assign it to a variable and then call `stop()`.
+To deregister `when` manually, assign it to a variable and then call `cancel()`.
 ```javascript
 var watcher = screenmatch.when('lg', function () {
     doStuff(); //will do stuff every time large gets matched
 });
 
-watcher.stop() // does nothing now
+watcher.cancel() // does nothing now
 ```
 
 ##### `is`

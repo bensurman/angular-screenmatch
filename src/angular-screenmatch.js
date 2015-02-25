@@ -255,7 +255,7 @@
                         }
                     });
 
-                    var result = { stop : watcher };
+                    var result = { cancel : watcher };
                     return result;
                 }
             }
