@@ -55,7 +55,8 @@
         var service = {
             is: is,
             bind: bind,
-            once: once
+            once: once,
+            when: when
         };
 
         init();
@@ -145,7 +146,7 @@
         //
         //Args: [1] String (passed to is())
         //      [2] Func for callback
-        //      [3] Scope, the scope to attach the listener to
+        //      [3] Scope, the scope to attach the listener to (optional)
         //
         //Returns: Fires the callback. No other return value.
         //
@@ -182,6 +183,80 @@
                         }
 
                     });
+                }
+            }
+        }
+
+        //Usage(when): Executing a callback that needs to run on every successful match.
+        //             Eg, Load something in the Dom, Start Animations.
+        //             Optional second callback to run on every unmatch
+        //             Eg. Stop Animations if you started them...
+        //
+        //Method: Passes a list of values to is() to compare truthiness.
+        //        Fires a callback, when a match is made.
+        //        Fires an optional second callback when a match is unmade.
+        //
+        //        Note: if nobind is true, callback only performs a check on page load.
+        //
+        //Args: [1] String (passed to is())
+        //      [2] Func for true callback
+        //      [3] Func for false callback (optional)
+        //      [4] Scope, the scope to attach the listener to (optional)
+        //
+        //Returns: Fires the callback. No other return value.
+        //
+        function when(list, trueback, falseback, scope) {
+
+            var prev = null;
+            var match = is(list); // set truthiness of match
+
+            if (angular.isUndefined(scope) && !angular.isUndefined(falseback)) {
+                //if there are 3 args, check if third is scope
+                if (!angular.isFunction(falseback)) {
+                    scope = falseback;
+                    falseback = undefined;
+                }
+            }
+            if (angular.isFunction(trueback) && (angular.isFunction(falseback) || angular.isUndefined(falseback))) {
+                //fire one of the callbacks immediately
+                if (match) {
+                    $timeout(function() {
+                        trueback();
+                    });
+                }
+                else {
+                    if (falseback) {
+                        $timeout(function() {
+                            falseback();
+                        });
+                    }
+                }
+
+                if (!nobind) {
+                    scope = scope || $rootScope;
+                    var watcher = scope.$on('screenmatch::resize', function () {
+
+                        prev = match;
+                        match = is(list);
+
+                        if (prev !== match) {
+                            if (match) {
+                                $timeout(function() {
+                                    trueback();
+                                });
+                            }
+                            else {
+                                if (falseback) {
+                                    $timeout(function() {
+                                        falseback();
+                                    });
+                                }
+                            }
+                        }
+                    });
+
+                    var result = { stop : watcher };
+                    return result;
                 }
             }
         }

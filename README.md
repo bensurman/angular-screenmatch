@@ -69,12 +69,10 @@ $scope.portable = screenmatch.bind('xs, sm', $scope);
 $scope.portable.active === true; //true if the screen is xs or sm
 
 if ($scope.portable.active) {
-    stopAnimation();
-} else {
-    startAnimation();
+    doStuff();
 }
 ```
-The second property is `unbind` which you can call to stop the variable updating.
+The second property is `unbind()` which you can call to stop the variable updating.
 
 ```javascript
 $scope.portable.unbind(); //now I no longer react to changes!
@@ -86,7 +84,7 @@ Check out the [section on how resize events are handled](#how-resize-events-are-
 
 ##### `once`
 
-If you only want to execute some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
+If you only want to run some code when a screen size is initially matched, execute it in the callback for `once`. This is great for things like loading data from a backend.
 
 ```javascript
 screenmatch.once('lg', function () {
@@ -94,6 +92,26 @@ screenmatch.once('lg', function () {
 });
 ```
 `once` attempts to find a match on load and if it fails, registers a listener which will check conditions each time the screen resizes.  Whenever a match is found, the callback is executed, and the listener is deregistered.
+
+##### `when`
+
+If you want to run code every time a screen size is matched, execute it in the callback for `when`. Optionally you can pass in a second callback which will execute when the screen size is unmatched again.
+
+```javascript
+screenmatch.when('lg', function () {
+    runMyAnimations();
+}, function () {
+    stopMyAnimations()
+}, $scope);
+```
+To deregister `when` manually, assign it to a variable and then call `stop()`.
+```javascript
+var watcher = screenmatch.when('lg', function () {
+    doStuff(); //will do stuff every time large gets matched
+});
+
+watcher.stop() // does nothing now
+```
 
 ##### `is`
 
