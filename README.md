@@ -135,7 +135,7 @@ A single event listener is added to `$window` which broadcasts resize events usi
 
 This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to the screenmatch functions and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
 
-To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Be careful to unregister any listeners you don't need if you use this feature.
+To create a permanent listener, the `scope` argument can be omitted from any function and it will default to listening on `$rootScope`.  Be careful to unregister any listeners you don't need if you use this feature.
 
 You can hook into the `$broadcast` event anywhere else in your project by registering your own listener.  See the [docs](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$on) for more info.
 
