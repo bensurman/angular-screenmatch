@@ -8,6 +8,7 @@
   "description": "Simple Angular API for performing screen size related tasks",
   "main": "dist/angular-screenmatch.min.js",
   "keywords": [
+    "angular-screenmatch",
     "angular",
     "screen",
     "matchmedia",
