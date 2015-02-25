@@ -133,7 +133,7 @@ Just remember that `is` will not update if the screen is resized.
 ## How resize events are handled
 A single event listener is added to `$window` which broadcasts resize events using `$rootScope.$broadcast`.  The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes.
 
-This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to `bind` or `once` and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
+This prevents having to bind an event listener to `$window` every time a directive is used or an angular binding is made.  Instead, scope is passed as an argument to the screenmatch functions and a listener is registered using `scope.$on`.  The listener will deregister whenever the scope is destroyed.
 
 To create a permanent listener, the `scope` argument can be omitted from either `bind` or `once` and it will default to listening on `$rootScope`.  Be careful to unregister any listeners you don't need if you use this feature.
 
