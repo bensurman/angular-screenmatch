@@ -128,7 +128,7 @@ if (smallScreen) {
 }
 ```
 
-Just remember that `is` will not update if the screen is resized.  It may be more practical to use either `bind` or `once`.
+Just remember that `is` will not update if the screen is resized.
 
 ## How resize events are handled
 A single event listener is added to `$window` which broadcasts resize events using `$rootScope.$broadcast`.  The broadcast is wrapped in an `$interval` with a configurable debounce setting, to delay firing it when the window resizes.
