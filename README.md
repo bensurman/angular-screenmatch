@@ -166,7 +166,7 @@ angular.module('yourmodule')
     });
 ```
 
-There are currently two predefined sets, `bootstrap` for Bootstrap 3, or `matchmedia` for MatchMedia devices.
+There are currently two predefined sets, `bootstrap` for Bootstrap 3, or `matchmedia` for matchMedia devices.
 
 ```javascript
 bootstrap : {
