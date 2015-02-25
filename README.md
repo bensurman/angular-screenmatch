@@ -106,7 +106,9 @@ screenmatch.when('lg', function () {
     stopMyAnimations()
 }, $scope);
 ```
-To deregister `when` manually, assign it to a variable and then call `cancel()`.
+On load, a match (or unmatch) will be made, and the appropriate callback will execute once. It won't fire again unless the truthiness of the match changes - so no need to worry about multiple callbacks whenever the screen resizes.  Resizing within the parameters for "lg" for example will have no effect.
+
+If you need to deregister `when` manually, you can assign it to a variable and then call `cancel()`.
 ```javascript
 var watcher = screenmatch.when('lg', function () {
     doStuff(); //will do stuff every time large gets matched
