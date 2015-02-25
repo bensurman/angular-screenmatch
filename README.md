@@ -145,8 +145,7 @@ scope.$on('screenmatch::resize', function () {
 });
 ```
 
-The `$window` event listener can be disabled during configuration if you don't want to use it.  Doing this will prevent `bind` and `once` from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.  Disabling the event listener will also stop the directive updating dynamically, but it will still work on load.
-
+The `$window` event listener can be disabled during configuration if you don't want to use it.  Doing this will prevent screenmatch from dynamically updating after the initial load.  <b>It is not recommended</b> unless you only want to calculate the screen size on load.
 
 ## Configuration
 
