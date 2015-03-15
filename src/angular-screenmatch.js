@@ -5,8 +5,8 @@
         .module('angular.screenmatch', [])
         .run(polyfillInjector)
         .provider('screenmatchConfig', screenmatchConfig)
-        .factory('screenmatch', screenmatch)
-        .directive('asmScreen', asmScreen);
+        .factory('screenmatch', ['$rootScope', '$window', '$interval', '$timeout', 'screenmatchConfig', screenmatch])
+        .directive('asmScreen', ['ngIfDirective', 'screenmatch', asmScreen]);
 
     function screenmatchConfig() {
         /* jshint validthis:true */
