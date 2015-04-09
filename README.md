@@ -296,14 +296,3 @@ To disable binding the `$window` resize event listener, and any related function
 >Object.cancel() to stop listening to resize events and stop executing callbacks
 >
 
-#### TODO
-
-
-credits
-
-
-bower package
-
-
-unit tests
-
